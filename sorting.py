@@ -75,7 +75,61 @@ typically not stable (unlike merge sort). slower than quicksort.
 used for large datasets, simpler does not need recursion.
 costly, unstable, not efficient for large data. 
 merge takes more space, heap takes a bit more time.
+uses - kth largest, priority queue, linux default 
 """
+def heapify(arr, n, i):
+	largest = i
+	l = 2*i+1
+	r = 2*i+2
+
+	if l<n and arr[i] < arr[l]:
+		largest = r
+
+	if largest!=i:
+		(arr[i], arr[largest]) = (arr[largest], arr[i])
+
+		heapify(arr, n, largest)
+
+def heapSort(arr):
+	n = len(arr)
+
+	for i in range(n//2-1, -1, -1):
+		heapify(arr, n, i)
+
+	for i in range(n-1, 0, -1):
+		(arr[i], arr[0]) = (arr[0], arr[i])
+		heapify(arr, i, 0)
+
+"""
+quick sort
+
+uses - all except stable sort
+fastest, cache friendly, in place
+kth smallet etc
+primitive type methods
+
+avg runtime = 0(n log.n)
+worst case: o(n^2)
+
+space: o(1)
+"""
+def partition(array, low, high):
+	pivot = array[high] # rightmost is my pivot
+	i = low-1
+
+	for j in range(low,high):
+		if array[j] <= pivot:
+			i = i+1
+			(array[i], array[j]) = (array[j], array[i])
+	
+	(array[i+1], array[high]) = (array[high], array[i+1])
+	return i+1
+
+def quickSort(array, low, high):
+	if low<high:
+		pi = partition(array, low, high)
+		quickSort(array, low, pi-1)
+		quickSort(array, pi+1, high)
 
 
 
